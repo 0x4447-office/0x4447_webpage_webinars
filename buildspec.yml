@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+    commands:
+      - npm install
+  build:
+    commands:
+      - npm run generate
+  post_build:
+    commands:
+      - aws s3 rm --recursive s3://$S3_BUCKET_WEBPAGE
+      - aws s3 cp ./dist s3://$S3_BUCKET_WEBPAGE --recursive
+      - aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
