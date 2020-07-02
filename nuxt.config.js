@@ -12,17 +12,18 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
     ]
   },
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: false,
   /*
   ** Global CSS
   */
-  css: [
+ css: [
+   '~/assets/main.css'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -58,5 +59,13 @@ export default {
     */
     extend (config, ctx) {
     }
+  },
+  /*
+  ** Env vars ass seen on readme.
+  */
+  env:{
+    COMPANY_NAME: '0x4447',
+    ESTABLISHED: '2016',
+    AWS_REGION: 'us-east-1',
   }
 }
