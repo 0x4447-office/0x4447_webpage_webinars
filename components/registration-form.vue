@@ -83,7 +83,7 @@ export default {
 
   methods: {
     save() {
-      this.$router.push({ name: 'thanks' })
+      this.$router.push({ path: '/thanks' })
     }
   },
 
