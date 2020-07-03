@@ -29,7 +29,8 @@ body {
 
 html,
 body {
-  font-family: "Roboto Mono", monospace;
+  /* font-family: "Roboto Mono", monospace; */
+  font-family: "HK Grotesk", sans-serif;
   padding-bottom: 3rem;
   font-weight: 300;
 }

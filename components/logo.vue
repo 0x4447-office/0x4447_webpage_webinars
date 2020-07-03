@@ -5,7 +5,7 @@
 .CompanyLogo {
   animation: 1s appear;
   margin: auto;
-  height: 200px;
+  height: 100px;
 }
 
 @keyframes appear {

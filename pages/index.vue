@@ -1,4 +1,5 @@
 <template>
+  <!-- <b-container> -->
   <b-container fluid class="p-5">
     <b-row>
       <b-col>
@@ -6,7 +7,7 @@
       </b-col>
     </b-row>
     <b-row>
-      <b-col sm="5">
+      <b-col sm="7">
         <registration-form />
       </b-col>
       <b-col>
@@ -19,6 +20,7 @@
       </b-col>
     </b-row>
   </b-container>
+  <!-- </b-container> -->
 </template>
 
 <script>
