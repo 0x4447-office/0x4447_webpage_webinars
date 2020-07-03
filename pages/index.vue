@@ -1,6 +1,5 @@
 <template>
-  <!-- <b-container> -->
-  <b-container fluid class="p-5">
+  <b-container style="width: 80%" fluid class="p-5">
     <b-row>
       <b-col>
         <event-info />
@@ -20,7 +19,6 @@
       </b-col>
     </b-row>
   </b-container>
-  <!-- </b-container> -->
 </template>
 
 <script>
