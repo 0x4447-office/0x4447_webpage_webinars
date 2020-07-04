@@ -16,6 +16,10 @@
     <b-row>
       <b-col>
         <page-footer />
+        <div v-if="debug">
+          {{time}}
+          {{event}}
+        </div>
       </b-col>
     </b-row>
   </b-container>
@@ -27,7 +31,9 @@ import RegistrationForm from '~/components/registration-form'
 import EventInfo from '~/components/event-info'
 import EventAbout from '~/components/event-about'
 import PageFooter from '~/components/page-footer'
-import AWS from 'aws-sdk';
+
+import { get_time, get_event } from '~/components/helpers/storage'
+
 
 export default {
   transition: 'slide-right',
@@ -39,40 +45,50 @@ export default {
     PageFooter
   },
 
-  async fetch () {
-
-    //
-    //  1.  Create the params of the object we want in S3
-    //
-    let params = {
-      Bucket: "webinars.0x4447.com.db.events",
-      Key: "latest_description.json"
+  data () {
+    return {
+      event: null,
+      time: null,
+      debug: true
     }
+  },
 
-    //
-    //  2.  Generate the AWS object with the Unuthorized Cognito credentials.
-    //
-    AWS.config.update({
-      region: "us-east-1",
-      credentials: new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: "us-east-1:619639e5-f742-4d8a-a190-850c65bb344e"
-      })
-    })
+  async fetch () {
+    get_time(this.set_time_callback)
+    get_event(this.set_event_callback)
+  },
 
-    //
-    //  3.  Initialize S3 Object
-    //
-    var s3 = new AWS.S3();
+  methods: {
+    set_time_callback (err, data) {
+        //
+        //  1.  CHeck for internal erros.
+        //
+        if(err)
+        {
+          return console.log(err)
+        }
 
-    //
-    //  4.  Get the object we want
-    //
-    s3.getObject(params, function(err, data) {
-      debugger
-      if (err) console.log(err, err.stack); // an error occurred
-      else     console.log(data);           // successful response
-    })
+        //
+        //  2.  Set the time object in our data.
+        //
+        this.time = JSON.parse(data.Body)
+    },
+    set_event_callback (err, data) {
+        //
+        //  1.  CHeck for internal erros.
+        //
+        if(err)
+        {
+          return console.log(err)
+        }
+
+        //
+        //  2.  Set event object in our data
+        //
+        this.event = JSON.parse(data.Body)
+    },
   }
+
 
 }
 </script>
