@@ -35,6 +35,9 @@ import PageFooter from '~/components/page-footer'
 import { get_time, get_event } from '~/components/helpers/storage'
 
 
+import { get_time, get_event } from '~/components/helpers/storage'
+
+
 export default {
   transition: 'slide-right',
 
