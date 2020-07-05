@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk'
 
-let TEST = false
+let TEST = true
 let TEST_REGION = "us-east-2"
 let TEST_BUCKET = "cognito-teste"
 let TEST_POOL_ID = "us-east-2:4fb6f5d4-3388-4da5-b4d2-2bedca19f11b"
@@ -23,18 +23,18 @@ AWS.config.credentials = new AWS.CognitoIdentityCredentials({
 })
 
 //
-//  2.  Initialize S3 Object
+//  2.  Initialize S3 Object.
 //
 let s3 = new AWS.S3({
   apiVersion: API_VERSION
 })
 
 //
-//  3.  Export a helper function to get the time of the latest event
+//  3.  Export a helper function to get the time of the latest event.
 //
 export function get_event (callback) {
   //
-  //  1.  Build the params of the event object we want
+  //  1.  Build the params of the event object we want.
   //
   let params = {
     Bucket: BUCKET,
@@ -42,17 +42,17 @@ export function get_event (callback) {
   }
 
   //
-  //  2.  Get the event object we want
+  //  2.  Get the event object we want.
   //
   s3.getObject(params, callback)
 }
 
 //
-//  4.  Export a helper function to get the time of the latest event
+//  4.  Export a helper function to get the time of the latest event.
 //
 export function get_time (callback) {
   //
-  //  1.  Build the params of the time object we want
+  //  1.  Build the params of the time object we want.
   //
   let params = {
     Bucket: BUCKET,
@@ -60,7 +60,7 @@ export function get_time (callback) {
   }
 
   //
-  //  2.  Get the object we want
+  //  2.  Get the object we want.
   //
   s3.getObject(params, callback)
 }
