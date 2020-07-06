@@ -7,7 +7,7 @@
     </b-row>
     <b-row>
       <b-col sm="7">
-        <registration-form />
+        <registration-form :event="event" />
       </b-col>
       <b-col>
         <event-about :event="event" />

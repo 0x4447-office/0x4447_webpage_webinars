@@ -9,10 +9,10 @@
         <b-img v-else blank blank-color="#ccc" width="64" alt="placeholder"></b-img>
       </template>
       <p>
-        {{event.title }}
+        {{ event.title }}
       </p>
       <p>
-        {{event.description || "loading..." }}
+        {{ event.description || "loading..." }}
       </p>
     </b-media>
   </b-card>
