@@ -56,33 +56,36 @@ export function get_time (callback) {
   s3.getObject(params, callback)
 }
 
-export function post_submission (form, key, on_success, on_error) {
-  //
-  //  1.  Try to handle the submission
-  //
-  try {
+//
+//  1. Helper function to encode forms that will be sent to AWS.
+//
+function encode_form (form) {
     //
     //  1.  Stringify form
     //
     let data = JSON.stringify(form)
 
     //
-    //  2.  Convert form string to an ArrayBuffer
+    //  2.  Convert form string to an ArrayBuffer and return it.
     //
     let encoder = new TextEncoder()
     let array_buffer = encoder.encode(data)
+    return array_buffer
+}
+
+
+//
+//  1. Helper function to handle the process of sending an object to a bucket.
+//
+function handle_upload (params, on_success, on_error) {
+  try {
+    //
+    //  1.  Prepare parameters for putObject function
+    //
+
 
     //
-    //  3.  Prepare parameters for putObject function
-    //
-    let params = {
-      Body: array_buffer,
-      Bucket: "webinars.0x4447.com.db.form.signups",
-      Key: key
-    }
-
-    //
-    //  4.  Call putObject to send json to S3 Bucket
+    //  2.  Call putObject to send json to S3 Bucket
     //
     s3.putObject(params, function(error, data) {
       //
@@ -109,4 +112,36 @@ export function post_submission (form, key, on_success, on_error) {
     //
     return on_error(error)
   }
+}
+
+export function post_submission (form, key, on_success, on_error) {
+  //
+  //  1.  Create the S3 params.
+  //
+  let params = {
+    Body: encode_form(form),
+    Bucket: "webinars.0x4447.com.db.form.signups",
+    Key: key
+  }
+
+  //
+  //  2.  Submit the object to S3.
+  //
+  handle_upload(params, on_success, on_error)
+}
+
+export function post_reseller_submission (form, key, on_success, on_error) {
+   //
+  //  1.  Create the S3 params.
+  //
+  let params = {
+    Body: encode_form(form),
+    Bucket: "webinars.0x4447.com.db.form.resellers",
+    Key: key
+  }
+
+  //
+  //  2.  Submit the object to S3.
+  //
+  handle_upload(params, on_success, on_error)
 }
