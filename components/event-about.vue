@@ -5,13 +5,14 @@
     </b-card-title>
     <b-media>
       <template v-slot:aside>
-        <b-img blank blank-color="#ccc" width="64" alt="placeholder"></b-img>
+        <b-img v-if="event.image" :src="event.image" width="64" alt="event image"></b-img>
+        <b-img v-else blank blank-color="#ccc" width="64" alt="placeholder"></b-img>
       </template>
-
       <p>
-        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
-        Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc
-        ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+        {{ event.title }}
+      </p>
+      <p>
+        {{ event.description || "loading..." }}
       </p>
     </b-media>
   </b-card>
@@ -19,7 +20,7 @@
 
 <script>
 export default {
-
+  props: ['event']
 }
 </script>
 

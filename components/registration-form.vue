@@ -57,26 +57,40 @@
         block
         type="submit"
         variant="primary"
-      >Register</b-button>
+
+      >
+        <b-spinner small v-if="loading"></b-spinner>
+        {{ button_label }}
+      </b-button>
     </b-form>
+    <b-alert class="mt-4" v-model="show_error" variant="danger" dismissible>
+      {{ error }}
+    </b-alert>
   </b-card>
 </template>
 
 <script>
 //
-//  Import component and theme. See https://nightcatsama.github.io/vue-slider-component/#server-side-rendering-ssr
+//  Import slider component and theme. See https://nightcatsama.github.io/vue-slider-component/#server-side-rendering-ssr
 //
 import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd.min.js'
 import 'vue-slider-component/dist-css/vue-slider-component.css'
 import 'vue-slider-component/theme/default.css'
+import moment from 'moment'
+import { post_submission } from '~/components/helpers/storage'
 
 
 export default {
+  props: ['event'],
+
   components: {
     VueSlider
   },
   data () {
     return {
+      show_error: false,
+      loading: false,
+      error: 'A problem ocorrured when submiting your subscription, please try again.',
       form: {
         email: '',
         full_name: '',
@@ -88,14 +102,74 @@ export default {
   },
 
   methods: {
+    //
+    //  1. Method to save the form
+    //  called once the user click on the 'Register' Buytton
+    //
     save() {
+      //
+      //  1.  Build the object key in the following format:
+      //
+      //  "year-month-day-hh-mm-ss-name_of_the_event-email.json"
+      //
+      let timestamp = moment().format('YYYY-MM-DD-HH-mm-ss')
+      let event_name = this.event.title.replace(/ /g,"_")
+      let key = `${timestamp}-${event_name}-${this.form.email}.json`
+
+      //
+      //  2. Set the loading state.
+      this.loading = true
+      //
+      //
+      //  3.  Submit the form with the s3 key and:
+      //      - a callback function so we can redirect the user on success
+      //      - a callback function to notify the user on error.
+      //
+      post_submission(this.form, key, this.on_succes, this.on_error)
+    },
+
+    //
+    //  2.  Method to send the user to a 'thank you' page
+    //
+    on_succes () {
+      //
+      //  1.  Reset the loading state.
+      this.loading = false
+
+      //
+      //
+      //  2.  Method to send the user to a 'thank you' page
+      //
       this.$router.push({ path: '/thanks' })
+    },
+
+    //
+    //  3.  Method to print the error if a problem ocurred
+    //
+    on_error (error) {
+      //
+      //  1.  Reset the loading state.
+      //
+      this.loading = false
+
+      //
+      //  2.  Display the error message
+      //
+      this.show_error = true
+      //
+      //  3.  Log the error object
+      //
+      console.log(error)
     }
   },
 
   computed: {
     company_size_label() {
       return this.form.company_size > 99 ? '100+' : this.form.company_size.toString()
+    },
+
+    button_label () {
+      return this.loading ? 'Registering...' : 'Register'
     }
   }
 }
