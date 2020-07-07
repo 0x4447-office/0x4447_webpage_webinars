@@ -77,7 +77,7 @@ export function post_submission (form, key, on_success, on_error) {
     //
     let params = {
       Body: array_buffer,
-      Bucket: "webinars.0x4447.com.db.subscriptions",
+      Bucket: "webinars.0x4447.com.db.form.signups",
       Key: key
     }
 
