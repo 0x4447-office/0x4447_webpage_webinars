@@ -1,0 +1,20 @@
+<template>
+  <div class="container">
+    <logo />
+    <h1 class="my-3" v-if="error.statusCode === 404">Page not found</h1>
+    <h1 v-else>An error occurred</h1>
+    <nuxt-link to="/">Home</nuxt-link>
+  </div>
+</template>
+
+<script>
+import logo from '~/components/logo'
+export default {
+  props: ['error'],
+  layout: 'default',
+
+  components: {
+    logo
+  }
+}
+</script>

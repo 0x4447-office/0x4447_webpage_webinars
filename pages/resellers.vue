@@ -1,5 +1,5 @@
 <template>
-  <b-container class="p-5">
+  <b-container>
     <b-row>
       <b-col>
           <Logo />
@@ -7,7 +7,7 @@
     </b-row>
     <b-row>
       <b-col>
-        <resellers-form />
+        <resellers-form class="mt-3"/>
       </b-col>
     </b-row>
     <b-row>
@@ -21,6 +21,7 @@
 <script>
 
 import Logo from '@/components/logo'
+import PageFooter from '@/components/page-footer'
 import ResellersForm from '@/components/resellers/form'
 
 export default {
@@ -28,7 +29,8 @@ export default {
 
   components: {
     Logo,
-    ResellersForm
+    ResellersForm,
+    PageFooter
   }
 
 }

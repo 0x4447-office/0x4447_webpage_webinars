@@ -1,30 +1,27 @@
 <template>
-  <div
-    class="text-center p-2"
-    border-variant="light"
-  >
-    <logo class="p-2" />
-
-    <p class="lead text-muted">Free Webinar</p>
-
-    <div v-if="time">
+  <div class="d-lg-flex justify-content-center text-center">
+    <span class="mx-2">
+      <logo />
+      <p class="lead text-muted">Free Webinar</p>
+    </span>
+    <span class="mx-2" >
       <p>The event starts at</p>
-      <h3>{{ time }}</h3>
+      <h3 v-if="time">{{ time }}</h3>
+      <b-spinner v-else></b-spinner>
       <p class="small">Your local time</p>
-    </div>
+    </span>
   </div>
 </template>
 
 <script>
-import logo from '@/components/logo'
+import logo from "@/components/logo";
 export default {
-  props: ['time'],
+  props: ["time"],
 
   components: {
     logo
   }
-}
+};
 </script>
 
-<style>
-</style>
+<style></style>
