@@ -1,19 +1,9 @@
 <template>
-  <img class="mx-auto CompanyLogo" src="/company_logo_rectangle.svg" id="home_header_logo" alt="logo" />
+  <nuxt-link to="/">
+      <img
+      id="home_header_logo"
+      height="100px"
+      src="/company_logo_rectangle.svg"
+      alt="logo" />
+  </nuxt-link>
 </template>
-<style>
-.CompanyLogo {
-  animation: 1s appear;
-  margin: auto;
-  height: 100px;
-}
-
-@keyframes appear {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-</style>

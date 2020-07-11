@@ -1,23 +1,15 @@
 <template>
-  <b-container style="width: 80%" fluid class="p-5">
+  <b-container>
+    <event-info :time="time_info" />
     <b-row>
-      <b-col>
-        <event-info :time="time_info" />
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col sm="7">
+      <b-col order-md="1" order-sm="2" sm="12" md="7" class="pr-5 formborder">
         <registration-form :event="event" />
       </b-col>
-      <b-col>
+      <b-col order-md="2" order-sm="1">
         <event-about :event="event" />
       </b-col>
     </b-row>
-    <b-row>
-      <b-col>
-        <page-footer />
-      </b-col>
-    </b-row>
+    <page-footer text="1H of open questions about the product and AWS over text" />
   </b-container>
 </template>
 
@@ -57,8 +49,7 @@ export default {
         //
         //  1.  Check for internal erros.
         //
-        if(err)
-        {
+        if(err) {
           return console.log(err)
         }
 
@@ -86,8 +77,7 @@ export default {
         //
         //  1.  CHeck for internal erros.
         //
-        if(err)
-        {
+        if(err) {
           return console.log(err)
         }
 
@@ -101,3 +91,17 @@ export default {
 
 }
 </script>
+<style scoped>
+.formborder {
+  border: none;
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 768px) {
+  .formborder {
+    border-right: 1px solid lightgray;
+    height: 100%px;
+  }
+}
+
+</style>
