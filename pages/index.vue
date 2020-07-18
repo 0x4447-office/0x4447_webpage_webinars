@@ -31,7 +31,7 @@
 import RegistrationForm from "~/components/registration-form";
 import EventAbout from "~/components/event-about";
 import PageFooter from "~/components/page-footer";
-import { get_event } from "~/components/helpers/storage";
+import { get_event, get_image_asset_url } from "~/components/helpers/storage";
 import timeutils from "~/components/helpers/timeutils";
 
 import logo from "~/components/logo";
@@ -71,15 +71,6 @@ export default {
       //  2.  Check if the image of the event is valid and set it to null if its not.
       //
       let event = JSON.parse(data.Body);
-      fetch(event.image, { method: "HEAD" })
-        .then(response => {
-          if (!response.ok) {
-            event.image = null;
-          }
-        })
-        .catch(err => {
-          event.image = null;
-        });
 
       //
       //  3. Localize the time info.
@@ -87,7 +78,12 @@ export default {
       event.time.localized_end = timeutils.to_local_tz(event.time.end);
 
       //
-      //  4. Define the event object.
+      //  4. Define the event image url.
+      //
+      event.image_url = get_image_asset_url(event.image);
+
+      //
+      //  5. Define the event object.
       //
       this.event = event;
     }

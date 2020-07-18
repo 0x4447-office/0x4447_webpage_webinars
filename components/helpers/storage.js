@@ -19,8 +19,10 @@ let s3 = new AWS.S3({
   apiVersion: '2006-03-01'
 })
 
+
+
 //
-//  3.  Export a helper function to get the time of the latest event.
+//  1.  Export a helper function to get the info about the latest event.
 //
 export function get_event (callback) {
   //
@@ -95,6 +97,9 @@ function handle_upload (params, on_success, on_error) {
   }
 }
 
+//
+//  1.  Export a helper function to post a submission to S3.
+//
 export function post_submission (form, key, on_success, on_error) {
   //
   //  1.  Create the S3 params.
@@ -111,6 +116,9 @@ export function post_submission (form, key, on_success, on_error) {
   handle_upload(params, on_success, on_error)
 }
 
+//
+//  1.  Export a helper function to post a reseller submission to S3.
+//
 export function post_reseller_submission (form, key, on_success, on_error) {
    //
   //  1.  Create the S3 params.
@@ -125,4 +133,15 @@ export function post_reseller_submission (form, key, on_success, on_error) {
   //  2.  Submit the object to S3.
   //
   handle_upload(params, on_success, on_error)
+}
+
+//
+//  1.  Export a helper function to get url of an image asset.
+//
+export function get_image_asset_url(asset_name) {
+  //
+  //
+  //  1.  Build the url of the asset we want.
+  //
+  return `https://s3.amazonaws.com/webinars.0x4447.com.db.assets/${asset_name}`
 }
