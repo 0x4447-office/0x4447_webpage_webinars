@@ -58,6 +58,26 @@
         </b-col>
       </b-row>
       <b-row>
+        <b-col>
+          <b-form-group
+            id="input-group-products"
+            class="text-left"
+            label="Products"
+            label-align="left"
+          >
+            <b-form-checkbox
+              v-for="product in products"
+              :key="product.id"
+              :value="product"
+              v-model="form.selected_products"
+              button
+              button-variant="secondary"
+              class="mr-2 mt-1"
+            >{{product.name}}</b-form-checkbox>
+          </b-form-group>
+        </b-col>
+      </b-row>
+      <b-row>
         <b-col md="12" lg="6">
           <b-form-group
             id="input-group-5"
@@ -89,33 +109,36 @@
           </b-form-group>
         </b-col>
       </b-row>
-
       <b-button block type="submit" variant="primary">
         <b-spinner small v-if="loading"></b-spinner>
         {{ button_label }}
       </b-button>
     </b-form>
-    <b-alert class="mt-4" v-model="show_error" variant="danger" dismissible>{{ error }}</b-alert>
+    <b-alert fade class="mt-4" v-model="show_error" variant="danger" dismissible>{{ error }}</b-alert>
   </div>
 </template>
 
 <script>
 import moment from "moment";
 import { post_reseller_submission } from "~/components/helpers/storage";
+import { AVAILABLE_PRODUCTS } from "~/components/helpers/reseller";
 
 export default {
   data() {
     return {
       show_error: false,
       loading: false,
-      error: "A problem ocorrured when submiting your form, please try again.",
+      error: "",
+      products: AVAILABLE_PRODUCTS,
+      teste_selected_products: [],
       form: {
         first_name: "",
         last_name: "",
         company_name: "",
         email: "",
         authorized_reseller_name: "",
-        authorized_reseller_aws_account_id: ""
+        authorized_reseller_aws_account_id: "",
+        selected_products: []
       }
     };
   },
@@ -123,11 +146,19 @@ export default {
   methods: {
     //
     //  1. Method to save the form
-    //  called once the user click on the 'Register' Buytton
+    //  called once the user click on the 'Register' Button
     //
     save() {
       //
-      //  1.  Build the object key in the following format:
+      // 1. Validate the selected products
+      //
+      if (!this.selected_products_valid) {
+        this.error = "Select at least 1 product.";
+        return;
+      }
+
+      //
+      //  2.  Build the object key in the following format:
       //  "year-month-day-hh-mm-ss-name_of_the_event-email.json"
       //
       let timestamp = moment().format("YYYY-MM-DD-HH-mm-ss");
@@ -141,12 +172,12 @@ export default {
       let key = `${timestamp}-${authorized_reseller_name}-${this.form.email}.json`;
 
       //
-      //  2. Set the loading state.
+      //  3. Set the loading state.
       //
       this.loading = true;
 
       //
-      //  3.  Submit the form with the s3 key and:
+      //  4.  Submit the form with the s3 key and:
       //      - a callback function so we can redirect the user on success
       //      - a callback function to notify the user on error.
       //
@@ -180,6 +211,8 @@ export default {
       //
       //  2.  Display the error message
       //
+      this.error =
+        "A problem ocorred when submiting your form, please try again.";
       this.show_error = true;
       //
       //  3.  Log the error object
@@ -191,6 +224,9 @@ export default {
   computed: {
     button_label() {
       return this.loading ? "Submitting..." : "Submit";
+    },
+    selected_products_valid() {
+      return this.form.selected_products.length > 0;
     }
   }
 };
