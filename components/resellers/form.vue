@@ -36,12 +36,7 @@
       </b-row>
       <b-row>
         <b-col md="12" lg="6">
-          <b-form-group
-            id="input-group-3"
-            label="Company:"
-            label-for="input-3"
-            label-align="left"
-          >
+          <b-form-group id="input-group-3" label="Company:" label-for="input-3" label-align="left">
             <b-form-input
               id="input-3"
               v-model="form.company_name"
@@ -51,12 +46,7 @@
           </b-form-group>
         </b-col>
         <b-col md="12" lg="6">
-          <b-form-group
-            id="input-group-4"
-            label="Email:"
-            label-for="input-4"
-            label-align="left"
-          >
+          <b-form-group id="input-group-4" label="Email:" label-for="input-4" label-align="left">
             <b-form-input
               id="input-4"
               v-model="form.email"
@@ -105,9 +95,7 @@
         {{ button_label }}
       </b-button>
     </b-form>
-    <b-alert class="mt-4" v-model="show_error" variant="danger" dismissible>
-      {{ error }}
-    </b-alert>
+    <b-alert class="mt-4" v-model="show_error" variant="danger" dismissible>{{ error }}</b-alert>
   </div>
 </template>
 
@@ -138,7 +126,6 @@ export default {
     //  called once the user click on the 'Register' Buytton
     //
     save() {
-
       //
       //  1.  Build the object key in the following format:
       //  "year-month-day-hh-mm-ss-name_of_the_event-email.json"
@@ -178,7 +165,7 @@ export default {
       //
       //  2.  Method to send the user to a 'thank you' page
       //
-      this.$router.push({ path: "/thanks" });
+      this.$router.push({ path: "/resellers/thanks" });
     },
 
     //
