@@ -10,7 +10,7 @@
       <b-col>
         <div class="ml-2 text-left">
           <p>The event starts at:</p>
-          <h3>{{ time_info || "loading ..." }}</h3>
+          <h3>{{ event.time.localized_start || "loading ..." }}</h3>
           <p class="small">Your local time.</p>
         </div>
       </b-col>
@@ -31,8 +31,9 @@
 import RegistrationForm from "~/components/registration-form";
 import EventAbout from "~/components/event-about";
 import PageFooter from "~/components/page-footer";
-import { get_time, get_event } from "~/components/helpers/storage";
-import moment from "moment-timezone";
+import { get_event } from "~/components/helpers/storage";
+import timeutils from "~/components/helpers/timeutils";
+
 import logo from "~/components/logo";
 
 export default {
@@ -47,13 +48,13 @@ export default {
 
   data() {
     return {
-      event: {},
-      time_info: null
+      event: {
+        time: {}
+      }
     };
   },
 
   async fetch() {
-    get_time(this.set_time_callback);
     get_event(this.set_event_callback);
   },
 
@@ -84,7 +85,7 @@ export default {
       //
       //  5. Format the localized time to what we want and set it in our data.
       //
-      this.time_info = localized_time_info.format("YYYY-MM-DD  HH:mm A");
+      this.time_info = localized_time_info.format("YYYY-MM-DD HH:mm A");
     },
     set_event_callback(err, data) {
       //
@@ -95,7 +96,7 @@ export default {
       }
 
       //
-      //  2.  Check if the image of the event is valid.
+      //  2.  Check if the image of the event is valid and set it to null if its not.
       //
       let event = JSON.parse(data.Body);
       fetch(event.image, { method: "HEAD" })
@@ -109,7 +110,12 @@ export default {
         });
 
       //
-      //  3. Define the event object.
+      //  3. Localize the time info.
+      event.time.localized_start = timeutils.to_local_tz(event.time.start);
+      event.time.localized_end = timeutils.to_local_tz(event.time.end);
+
+      //
+      //  4. Define the event object.
       //
       this.event = event;
     }

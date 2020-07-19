@@ -1,7 +1,6 @@
 import AWS from 'aws-sdk'
 let BUCKET = "webinars.0x4447.com.db.events"
-let EVENT_KEY = "latest_description.json"
-let EVENT_TIME_KEY = "latest_time.json"
+let EVENT_KEY = "event.json"
 
 //
 //  1.  Generate the AWS object with the Unuthorized Cognito credentials.
@@ -34,24 +33,6 @@ export function get_event (callback) {
 
   //
   //  2.  Get the event object we want.
-  //
-  s3.getObject(params, callback)
-}
-
-//
-//  4.  Export a helper function to get the time of the latest event.
-//
-export function get_time (callback) {
-  //
-  //  1.  Build the params of the time object we want.
-  //
-  let params = {
-    Bucket: BUCKET,
-    Key: EVENT_TIME_KEY
-  }
-
-  //
-  //  2.  Get the object we want.
   //
   s3.getObject(params, callback)
 }
