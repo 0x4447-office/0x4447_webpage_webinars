@@ -9,9 +9,9 @@
       </b-col>
       <b-col>
         <div class="ml-2 text-left">
-          <p>The event starts at</p>
+          <p>The event starts at:</p>
           <h3>{{ event.time.localized_start || "loading ..." }}</h3>
-          <p class="small">Your local time</p>
+          <p class="small">Your local time.</p>
         </div>
       </b-col>
     </b-row>
@@ -23,7 +23,7 @@
         <event-about :event="event" />
       </b-col>
     </b-row>
-    <page-footer text="1H of open questions about the product and AWS over text" />
+    <page-footer text="One hour of open questions after the webinar." />
   </b-container>
 </template>
 
@@ -59,6 +59,34 @@ export default {
   },
 
   methods: {
+    set_time_callback(err, data) {
+      //
+      //  1.  Check for internal erros.
+      //
+      if (err) {
+        return console.log(err);
+      }
+
+      //
+      //  2.  Set the time object in our data.
+      //
+      let time_info = JSON.parse(data.Body);
+
+      //
+      //  3.  Guess the browser timezone.
+      //
+      let tz = moment.tz.guess();
+
+      //
+      //  4. Convert the original event time to the user's timezone.
+      //
+      let localized_time_info = moment.tz(time_info.time, tz);
+
+      //
+      //  5. Format the localized time to what we want and set it in our data.
+      //
+      this.time_info = localized_time_info.format("YYYY-MM-DD HH:mm A");
+    },
     set_event_callback(err, data) {
       //
       //  1.  CHeck for internal erros.

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Form Title</h1>
+    <h1>Become a Reseller</h1>
     <b-form @submit.prevent="save">
       <b-row>
         <b-col md="12" lg="6">
@@ -14,7 +14,7 @@
               id="input-1"
               v-model="form.first_name"
               required
-              placeholder="Enter first name"
+              placeholder="John"
             ></b-form-input>
           </b-form-group>
         </b-col>
@@ -29,7 +29,7 @@
               id="input-2"
               v-model="form.last_name"
               required
-              placeholder="Enter last name"
+              placeholder="Doe"
             ></b-form-input>
           </b-form-group>
         </b-col>
@@ -41,7 +41,7 @@
               id="input-3"
               v-model="form.company_name"
               required
-              placeholder="Company name"
+              placeholder="Example LLC"
             ></b-form-input>
           </b-form-group>
         </b-col>
@@ -52,7 +52,7 @@
               v-model="form.email"
               type="email"
               required
-              placeholder="Enter email"
+              placeholder="john.doe@example.com"
             ></b-form-input>
           </b-form-group>
         </b-col>
@@ -69,7 +69,7 @@
               id="input-5"
               v-model="form.authorized_reseller_name"
               required
-              placeholder="Enter authorized reseller name"
+              placeholder="Name submited to AWS"
             ></b-form-input>
           </b-form-group>
         </b-col>
@@ -84,7 +84,7 @@
               id="input-6"
               v-model="form.authorized_reseller_aws_account_id"
               required
-              placeholder="Enter authorized reseller AWS account ID"
+              placeholder="AWS Account ID"
             ></b-form-input>
           </b-form-group>
         </b-col>

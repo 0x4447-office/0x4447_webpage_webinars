@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-left">Form</h1>
+    <h1 class="text-left">Sing Up</h1>
     <b-form @submit.prevent="save">
       <b-row>
         <b-col md="12" lg="6">
@@ -20,7 +20,7 @@
               v-model="form.email"
               type="email"
               required
-              placeholder="Enter email"
+              placeholder="john.doe@example.com"
             />
           </b-form-group>
         </b-col>
@@ -28,7 +28,7 @@
       <b-row>
         <b-col md="12" lg="6">
           <b-form-group id="input-group-3" label="Company:" label-for="input-3" label-align="left">
-            <b-form-input id="input-3" v-model="form.company" required placeholder="Company name" />
+            <b-form-input id="input-3" v-model="form.company" required placeholder="Example LLC" />
           </b-form-group>
         </b-col>
         <b-col>
@@ -42,7 +42,7 @@
               id="input-4"
               v-model="form.job_title"
               required
-              placeholder="Enter job title"
+              placeholder="CEO, CTO, VP off... etc."
             />
           </b-form-group>
         </b-col>
@@ -123,7 +123,7 @@ export default {
       return label;
     },
     button_label() {
-      return this.loading ? "Registering..." : "Register";
+      return this.loading ? "Signing Up..." : "Sing Up";
     }
   },
 
