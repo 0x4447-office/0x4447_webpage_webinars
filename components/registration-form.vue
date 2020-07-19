@@ -129,10 +129,11 @@ export default {
 
   methods: {
     //
-    //  1. Method to save the form
-    //  called once the user click on the 'Register' Buytton
+    //  Method to save the form called once the user click on the 'Register' 
+    //  Buytton
     //
     save() {
+
       //
       //  1.  Make the S3 object name using Unix miliseconds, to ensure that 
       //      the name is unique, and will make the triggering system perform
@@ -144,24 +145,30 @@ export default {
       //  2. Update the 'company_size' to the normalized value (100+, 250+ and so on)
       //
       this.form.company_size = this.company_size_value;
+      
       //
       //  3. Set the loading state.
+      //
       this.loading = true;
+
       //
       //
       //  4.  Submit the form with the s3 key and:
       //      - a callback function so we can redirect the user on success
-      //      - a callback function to notify the user on error.
+      //      - a callback function to notify the user off errors.
       //
       post_submission(this.form, key, this.on_succes, this.on_error);
+      
     },
 
     //
-    //  2.  Method to send the user to a 'thank you' page
+    //  Method to send the user to a 'thank you' page
     //
     on_succes() {
+      
       //
       //  1.  Reset the loading state.
+      //
       this.loading = false;
 
       //
@@ -169,12 +176,14 @@ export default {
       //  2.  Method to send the user to a 'thank you' page
       //
       this.$router.push({ path: "/thanks" });
+
     },
 
     //
-    //  3.  Method to print the error if a problem ocurred
+    //  Method to print the error if a problem ocurred
     //
     on_error(error) {
+
       //
       //  1.  Reset the loading state.
       //
@@ -184,10 +193,12 @@ export default {
       //  2.  Display the error message
       //
       this.show_error = true;
+
       //
       //  3.  Log the error object
       //
       console.log(error);
+
     }
   }
 };
