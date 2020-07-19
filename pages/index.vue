@@ -9,9 +9,9 @@
       </b-col>
       <b-col>
         <div class="ml-2 text-left">
-          <p>The event starts at</p>
+          <p>The event starts at:</p>
           <h3>{{ time_info || "loading ..." }}</h3>
-          <p class="small">Your local time</p>
+          <p class="small">Your local time.</p>
         </div>
       </b-col>
     </b-row>
@@ -23,7 +23,7 @@
         <event-about :event="event" />
       </b-col>
     </b-row>
-    <page-footer text="1H of open questions about the product and AWS over text" />
+    <page-footer text="One hour of open questions after the webinar." />
   </b-container>
 </template>
 
@@ -84,7 +84,7 @@ export default {
       //
       //  5. Format the localized time to what we want and set it in our data.
       //
-      this.time_info = localized_time_info.format("YYYY-MM-DD  HH:mm");
+      this.time_info = localized_time_info.format("YYYY-MM-DD  HH:mm A");
     },
     set_event_callback(err, data) {
       //
