@@ -134,13 +134,11 @@ export default {
     //
     save() {
       //
-      //  1.  Build the object key in the following format:
+      //  1.  Make the S3 object name using Unix miliseconds, to ensure that 
+      //      the name is unique, and will make the triggering system perform
+      //      a put event.
       //
-      //  "year-month-day-hh-mm-ss-name_of_the_event-email.json"
-      //
-      let timestamp = moment().format("YYYY-MM-DD-HH-mm-ss");
-      let event_name = this.event.title.replace(/ /g, "_");
-      let key = `${timestamp}-${event_name}-${this.form.email}.json`;
+      let key = Date.now() + '.json';
 
       //
       //  2. Update the 'company_size' to the normalized value (100+, 250+ and so on)
