@@ -59,34 +59,6 @@ export default {
   },
 
   methods: {
-    set_time_callback(err, data) {
-      //
-      //  1.  Check for internal erros.
-      //
-      if (err) {
-        return console.log(err);
-      }
-
-      //
-      //  2.  Set the time object in our data.
-      //
-      let time_info = JSON.parse(data.Body);
-
-      //
-      //  3.  Guess the browser timezone.
-      //
-      let tz = moment.tz.guess();
-
-      //
-      //  4. Convert the original event time to the user's timezone.
-      //
-      let localized_time_info = moment.tz(time_info.time, tz);
-
-      //
-      //  5. Format the localized time to what we want and set it in our data.
-      //
-      this.time_info = localized_time_info.format("YYYY-MM-DD HH:mm A");
-    },
     set_event_callback(err, data) {
       //
       //  1.  CHeck for internal erros.
