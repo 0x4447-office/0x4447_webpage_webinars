@@ -14,6 +14,6 @@ export default {
     //
     //  3. Return the formatted localized time.
     //
-    return localized_time.format("YYYY-MM-DD  HH:mm");
+    return localized_time.format("YYYY-MM-DD  HH:mm A");
   }
 }
