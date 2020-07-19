@@ -7,12 +7,11 @@
     <hr />
     <p>
       Est.2016, Copr.
-      <a href="https://0x4447.com/" target="_blank">0x4447</a>
-      ™ LLC.
+      <a href="https://0x4447.com/" target="_blank">0x4447™</a> LLC.
     </p>
     <p>
-      <nuxt-link class="mx-1" to="/privacy">Privacy</nuxt-link>
-      <nuxt-link class="mx-1" to="/terms">Terms</nuxt-link>
+      <a href="https://0x4447.com/" target="_blank">Privacy</a>
+      <a href="https://0x4447.com/" target="_blank">Terms</a>
       <nuxt-link class="mx-1" to="resellers">Reseller</nuxt-link>
     </p>
   </div>
@@ -20,6 +19,6 @@
 
 <script>
 export default {
-  props: ['text']
-}
+  props: ["text"]
+};
 </script>
