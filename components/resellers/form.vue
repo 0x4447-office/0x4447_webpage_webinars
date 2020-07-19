@@ -149,8 +149,9 @@ export default {
     //  called once the user click on the 'Register' Button
     //
     save() {
+      
       //
-      // 1. Validate the selected products
+      // 1. Validate the selected products.
       //
       if (!this.selected_products_valid) {
         this.error = "Select at least 1 product.";
@@ -158,18 +159,11 @@ export default {
       }
 
       //
-      //  2.  Build the object key in the following format:
-      //  "year-month-day-hh-mm-ss-name_of_the_event-email.json"
+      //  2.  Make the S3 object name using Unix miliseconds, to ensure that 
+      //      the name is unique, and will make the triggering system perform
+      //      a put event.
       //
-      let timestamp = moment().format("YYYY-MM-DD-HH-mm-ss");
-
-      // replace all whitespaces for underscore
-      let authorized_reseller_name = this.form.authorized_reseller_name.replace(
-        / /g,
-        "_"
-      );
-
-      let key = `${timestamp}-${authorized_reseller_name}-${this.form.email}.json`;
+      let key = Date.now() + '.json';
 
       //
       //  3. Set the loading state.
@@ -182,6 +176,7 @@ export default {
       //      - a callback function to notify the user on error.
       //
       post_reseller_submission(this.form, key, this.on_succes, this.on_error);
+      
     },
 
     //
