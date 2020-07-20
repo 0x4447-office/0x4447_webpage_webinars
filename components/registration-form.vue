@@ -5,18 +5,45 @@
       <b-row>
         <b-col md="12" lg="6">
           <b-form-group
-            id="input-group-1"
-            label="Full Name:"
-            label-for="input-1"
+            id="input-group-first-name"
+            label="First Name:"
+            label-for="input-first-name"
             label-align="left"
           >
-            <b-form-input id="input-1" v-model="form.full_name" required placeholder="Enter name" />
+            <b-form-input
+              id="input-first-name"
+              v-model="form.first_name"
+              required
+              placeholder="Enter first name"
+            />
           </b-form-group>
         </b-col>
         <b-col>
-          <b-form-group id="input-group-2" label="Email:" label-for="input-2" label-align="left">
+          <b-form-group
+            id="input-group-last-name"
+            label="Last Name:"
+            label-for="input-last-name"
+            label-align="left"
+          >
             <b-form-input
-              id="input-2"
+              id="input-last-name"
+              v-model="form.last_name"
+              required
+              placeholder="Enter last name"
+            />
+          </b-form-group>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
+          <b-form-group
+            id="input-group-email"
+            label="Email:"
+            label-for="input-email"
+            label-align="left"
+          >
+            <b-form-input
+              id="input-email"
               v-model="form.email"
               type="email"
               required
@@ -27,19 +54,29 @@
       </b-row>
       <b-row>
         <b-col md="12" lg="6">
-          <b-form-group id="input-group-3" label="Company:" label-for="input-3" label-align="left">
-            <b-form-input id="input-3" v-model="form.company" required placeholder="Example LLC" />
+          <b-form-group
+            id="input-group-company"
+            label="Company:"
+            label-for="input-company"
+            label-align="left"
+          >
+            <b-form-input
+              id="input-company"
+              v-model="form.company"
+              required
+              placeholder="Example LLC"
+            />
           </b-form-group>
         </b-col>
         <b-col>
           <b-form-group
-            id="input-group-4"
+            id="input-group-job-title"
             label="Job Title:"
-            label-for="input-4"
+            label-for="input-job-title"
             label-align="left"
           >
             <b-form-input
-              id="input-4"
+              id="input-job-title"
               v-model="form.job_title"
               required
               placeholder="CEO, CTO, VP off... etc."
@@ -48,7 +85,12 @@
         </b-col>
       </b-row>
 
-      <b-form-group id="input-group-5" label-for="input-5" label-align="left" label="Company Size">
+      <b-form-group
+        id="input-group-company-size"
+        label-for="input-company-size"
+        label-align="left"
+        label="Company Size"
+      >
         <VueSlider
           v-model="form.company_size"
           class="ml-2"
@@ -56,7 +98,12 @@
           :max="103"
           :tooltip-formatter="company_size_value"
         />
-        <b-form-input id="input-5" class="mt-1" readonly :placeholder="company_size_value" />
+        <b-form-input
+          id="input-company-size"
+          class="mt-1"
+          readonly
+          :placeholder="company_size_value"
+        />
       </b-form-group>
       <b-button block type="submit" variant="primary">
         <b-spinner v-if="loading" small />
@@ -70,9 +117,6 @@
 </template>
 
 <script>
-//
-//  Import slider component and theme. See https://nightcatsama.github.io/vue-slider-component/#server-side-rendering-ssr
-//
 import VueSlider from "vue-slider-component/dist-css/vue-slider-component.umd.min.js";
 import "vue-slider-component/dist-css/vue-slider-component.css";
 import "vue-slider-component/theme/default.css";
@@ -129,23 +173,22 @@ export default {
 
   methods: {
     //
-    //  Method to save the form called once the user click on the 'Register' 
+    //  Method to save the form called once the user click on the 'Register'
     //  Buytton
     //
     save() {
-
       //
-      //  1.  Make the S3 object name using Unix miliseconds, to ensure that 
+      //  1.  Make the S3 object name using Unix miliseconds, to ensure that
       //      the name is unique, and will make the triggering system perform
       //      a put event.
       //
-      let key = Date.now() + '.json';
+      let key = Date.now() + ".json";
 
       //
       //  2. Update the 'company_size' to the normalized value (100+, 250+ and so on)
       //
       this.form.company_size = this.company_size_value;
-      
+
       //
       //  3. Set the loading state.
       //
@@ -158,14 +201,12 @@ export default {
       //      - a callback function to notify the user off errors.
       //
       post_submission(this.form, key, this.on_succes, this.on_error);
-      
     },
 
     //
     //  Method to send the user to a 'thank you' page
     //
     on_succes() {
-      
       //
       //  1.  Reset the loading state.
       //
@@ -176,14 +217,12 @@ export default {
       //  2.  Method to send the user to a 'thank you' page
       //
       this.$router.push({ path: "/thanks" });
-
     },
 
     //
     //  Method to print the error if a problem ocurred
     //
     on_error(error) {
-
       //
       //  1.  Reset the loading state.
       //
@@ -198,7 +237,6 @@ export default {
       //  3.  Log the error object
       //
       console.log(error);
-
     }
   }
 };
