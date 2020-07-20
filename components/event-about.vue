@@ -6,7 +6,7 @@
     <b-media>
       <template v-slot:aside>
         <b-img v-if="!event.image" blank blank-color="#ccc" width="64" alt="placeholder"></b-img>
-        <b-img v-else :src="event.image" width="64" alt="event image"></b-img>
+        <b-img v-else :src="event.image_url" width="64" alt="event image"></b-img>
       </template>
       <div>
         <p>{{ event.title }}</p>
