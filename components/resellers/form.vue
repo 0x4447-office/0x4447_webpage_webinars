@@ -10,12 +10,7 @@
             label-for="input-1"
             label-align="left"
           >
-            <b-form-input
-              id="input-1"
-              v-model="form.first_name"
-              required
-              placeholder="John"
-            ></b-form-input>
+            <b-form-input id="input-1" v-model="form.first_name" required placeholder="John"></b-form-input>
           </b-form-group>
         </b-col>
         <b-col md="12" lg="6">
@@ -25,12 +20,7 @@
             label-for="input-2"
             label-align="left"
           >
-            <b-form-input
-              id="input-2"
-              v-model="form.last_name"
-              required
-              placeholder="Doe"
-            ></b-form-input>
+            <b-form-input id="input-2" v-model="form.last_name" required placeholder="Doe"></b-form-input>
           </b-form-group>
         </b-col>
       </b-row>
@@ -114,7 +104,7 @@
         {{ button_label }}
       </b-button>
     </b-form>
-    <b-alert fade class="mt-4" v-model="show_error" variant="danger" dismissible>{{ error }}</b-alert>
+    <b-alert fade show v-if="show_error" class="mt-4" variant="danger">{{ error }}</b-alert>
   </div>
 </template>
 
@@ -126,10 +116,10 @@ import { AVAILABLE_PRODUCTS } from "~/components/helpers/reseller";
 export default {
   data() {
     return {
-      show_error: false,
       loading: false,
       error: "",
       products: AVAILABLE_PRODUCTS,
+      show_error: false,
       teste_selected_products: [],
       form: {
         first_name: "",
@@ -149,38 +139,56 @@ export default {
     //  called once the user click on the 'Register' Button
     //
     save() {
-      
       //
-      // 1. Validate the selected products.
+      // 1. Reset error state.
       //
-      if (!this.selected_products_valid) {
+      this.error = "";
+      this.show_error = false;
+
+      //
+      //  2. Assert that we have at least 1 selected products.
+      //
+      if (this.form.selected_products.length === 0) {
         this.error = "Select at least 1 product.";
+        this.show_error = true;
         return;
       }
 
       //
-      //  2.  Make the S3 object name using Unix miliseconds, to ensure that 
+      //  3. Assert that the account id informed is 12 digits.
+      //
+      let account_id_pattern = /^\d{12}$/;
+      let valid_account_id = account_id_pattern.test(
+        this.form.authorized_reseller_aws_account_id
+      );
+      if (!valid_account_id) {
+        this.error = "Invalid AWS account ID";
+        this.show_error = true;
+        return;
+      }
+
+      //
+      //  4.  Make the S3 object name using Unix miliseconds, to ensure that
       //      the name is unique, and will make the triggering system perform
       //      a put event.
       //
-      let key = Date.now() + '.json';
+      let key = Date.now() + ".json";
 
       //
-      //  3. Set the loading state.
+      //  5. Set the loading state.
       //
       this.loading = true;
 
       //
-      //  4.  Submit the form with the s3 key and:
+      //  6.  Submit the form with the s3 key and:
       //      - a callback function so we can redirect the user on success
       //      - a callback function to notify the user on error.
       //
       post_reseller_submission(this.form, key, this.on_succes, this.on_error);
-      
     },
 
     //
-    //  2.  Method to send the user to a 'thank you' page
+    //  2.  Callback function called when the submission is done.
     //
     on_succes() {
       //
@@ -189,13 +197,13 @@ export default {
 
       //
       //
-      //  2.  Method to send the user to a 'thank you' page
+      //  2.  Send the user to a 'thank you' page
       //
       this.$router.push({ path: "/resellers/thanks" });
     },
 
     //
-    //  3.  Method to print the error if a problem ocurred
+    //  3.  Callback function called when theres an error in the form submission.
     //
     on_error(error) {
       //
@@ -215,13 +223,9 @@ export default {
       console.log(error);
     }
   },
-
   computed: {
     button_label() {
       return this.loading ? "Submitting..." : "Submit";
-    },
-    selected_products_valid() {
-      return this.form.selected_products.length > 0;
     }
   }
 };
