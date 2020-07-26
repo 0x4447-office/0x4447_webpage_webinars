@@ -61,7 +61,7 @@
               :value="product"
               v-model="form.selected_products"
               button
-              button-variant="secondary"
+              button-variant="primary"
               class="mr-2 mt-1"
             >{{product.name}}</b-form-checkbox>
           </b-form-group>
@@ -128,8 +128,8 @@ export default {
         email: "",
         authorized_reseller_name: "",
         authorized_reseller_aws_account_id: "",
-        selected_products: []
-      }
+        selected_products: [],
+      },
     };
   },
 
@@ -221,12 +221,20 @@ export default {
       //  3.  Log the error object
       //
       console.log(error);
-    }
+    },
   },
   computed: {
     button_label() {
       return this.loading ? "Submitting..." : "Submit";
-    }
-  }
+    },
+  },
 };
 </script>
+
+<style>
+.btn-group-toggle > .btn {
+  background-color: #b0b3b6;
+  border-color: #b0b3b6;
+  box-shadow: none;
+}
+</style>
