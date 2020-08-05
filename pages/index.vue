@@ -4,7 +4,6 @@
       <b-col sm="12" md="7" class="pr-5">
         <span class="mx-2 text-center">
           <logo />
-          <p class="lead text-muted">Free Webinar</p>
         </span>
       </b-col>
       <b-col>
